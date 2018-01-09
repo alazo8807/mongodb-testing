@@ -35,4 +35,24 @@ describe('Updating records', () => {
     it('A model instance can update', (done) => {
         assertName(ale.update({name: 'Alejo'}), done);
     });
+    
+    it('A model class can update', (done) => {
+        assertName(User.update({name: 'Ale'}, {name:'Alejo'}), done);
+    });
+    
+    it('A model class can update one record', (done) => {
+       assertName(User.findOneAndUpdate({name: 'Ale'}, {name:'Alejo'}), done); 
+    });
+    
+    it('A model class can find one record by Id and update', (done) => {
+       assertName(User.findByIdAndUpdate(ale._id, {name:'Alejo'}), done); 
+    });
+    
+    // it('A User can have their postCount incremented by 1', () => {
+    //   User.update({name: 'Ale'}, { $inc: { postCount: 1 } }) //Increments Ale's postCount by 1
+    //     .then(() => User.findOne({name: 'Ale'}))
+    //     .then((foundUser) => {
+    //         assert(foundUser.postCount === 2);
+    //     });
+    // });
 });
