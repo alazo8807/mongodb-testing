@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const PostSchema = require("./post");
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -9,7 +9,11 @@ const userSchema = new mongoose.Schema({
         },
         required: [true, 'User name required.']
     },
-    postCount: Number
+    posts: [PostSchema]
+});
+
+userSchema.virtual('postCount').get(function(){ //for virtual type getter, use function keyword and not ()=>{}
+    return this.posts.length;
 });
 
 var User = mongoose.model('User', userSchema);
