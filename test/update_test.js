@@ -5,7 +5,7 @@ describe('Updating records', () => {
     let ale; 
     
     beforeEach((done) => {
-        ale = new User({name: 'Ale', postCount: 10});
+        ale = new User({name: 'Ale', likes: 10});
         ale.save()
             .then(() => done());
     });
@@ -48,6 +48,7 @@ describe('Updating records', () => {
        assertName(User.findByIdAndUpdate(ale._id, {name:'Alejo'}), done); 
     });
     
+    //Use xit to exclude a test
     xit('A User can have their postCount incremented by 1', (done) => {
       User.update({name: 'Ale'}, { $inc: { postCount: 1 } }) //Increments Ale's postCount by 1
         .then(() => User.findOne({name: 'Ale'}))
@@ -56,4 +57,14 @@ describe('Updating records', () => {
             done();
         });
     });
+    
+    it('A User can have their likes incremented by 1', (done) => {
+      User.update({name: 'Ale'}, { $inc: { likes: 1 } }) //Increments Ale's likes by 1
+        .then(() => User.findOne({name: 'Ale'}))
+        .then((foundUser) => {
+            assert(foundUser.likes === 11);
+            done();
+        });
+    });
+    
 });

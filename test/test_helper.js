@@ -15,6 +15,13 @@ before((done) => {
 });
     
 beforeEach((done) => {
-    mongoose.connection.collections.users.drop();    //Deletes all records for users collection
-    done();
+    //all collections have to be in lower case since Mongodb creates the names in lower case.
+    const {users, comments, blogposts} = mongoose.connection.collections;   //ES6 syntax
+    users.drop(() => {
+        comments.drop(() => {
+            blogposts.drop(() => {
+                done();
+            })    
+        });    
+    });    //Deletes all records for users collection
 });    
